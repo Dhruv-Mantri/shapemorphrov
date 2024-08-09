@@ -1,0 +1,212 @@
+<mujoco model="RX5left">
+    <compiler angle="degree" />
+    <option timestep="0.005" />
+	<visual>
+		<headlight ambient="0.5 0.5 0.5"/>
+	</visual>
+    <asset>
+        <mesh name="base" file="hand simulation\rx5 obj files\Base Defeatured.STEP-1.obj" scale="0.005 0.005 0.005"/>  
+		<mesh name="joint42" file="hand simulation\rx5 obj files\joint4final.obj" scale="0.005 0.005 0.005" />
+        <mesh name="ab" file="hand simulation\rx5 obj files\ab2.obj" scale="0.005 0.005 0.005" />
+        <mesh name="rxclaw" file="hand simulation\rx5 obj files\claw.obj" scale="0.005 0.005 0.005" />
+        <mesh name="longtube" file="hand simulation\rx5 obj files\tubefinal.obj" scale="0.005 0.005 0.005" />
+        <mesh name="joint1" file="hand simulation\rx5 obj files\joint1.obj" scale="0.005 0.005 0.005" />
+        <mesh name="joint2" file="hand simulation\rx5 obj files\joint2final.obj" scale="0.005 0.005 0.005" />
+        <mesh name="joint3" file="hand simulation\rx5 obj files\joint3final2.obj" scale="0.005 0.005 0.005" />
+		<mesh name="joint52" file="hand simulation\rx5 obj files\joint5final.obj" scale="0.005 0.005 0.005" />
+		
+		<mesh name="Rbase" file="hand simulation\rx5 obj files\Base Defeatured.STEP-1.obj" scale="0.005 0.005 0.005"/>  
+		<mesh name="Rjoint42" file="hand simulation\rx5 obj files\joint4final.obj" scale="0.005 0.005 0.005" />
+        <mesh name="Rab" file="hand simulation\rx5 obj files\ab2.obj" scale="0.005 0.005 0.005" />
+        <mesh name="Rrxclaw" file="hand simulation\rx5 obj files\claw.obj" scale="0.005 0.005 0.005" />
+        <mesh name="Rlongtube" file="hand simulation\rx5 obj files\tubefinal.obj" scale="0.005 0.005 0.005" />
+        <mesh name="Rjoint1" file="hand simulation\rx5 obj files\joint1.obj" scale="0.005 0.005 0.005" />
+        <mesh name="Rjoint2" file="hand simulation\rx5 obj files\joint2final.obj" scale="0.005 0.005 0.005" />
+        <mesh name="Rjoint3" file="hand simulation\rx5 obj files\joint3final2.obj" scale="0.005 0.005 0.005" />
+		<mesh name="Rjoint52" file="hand simulation\rx5 obj files\joint5final.obj" scale="0.005 0.005 0.005" />
+		
+		
+		<mesh name="rovframe" file="rov simulation\shapemorphrov.obj" scale="0.035 0.035 0.035"/>
+		
+    </asset>
+	
+	
+	<contact>
+	  <!--LEFT ARM-->
+	  <exclude body1="j4" body2="base"/>
+	  <exclude body1="j5" body2="base"/>
+	  <exclude body1="j4" body2="j5"/>
+	  <exclude body1="j3" body2="j2"/>
+	  <exclude body1="j2" body2="ab"/>
+	  <exclude body1="j1" body2="ab"/>
+	  
+	  <!--RIGHT ARM-->
+	  <exclude body1="Rj4" body2="baseR"/>
+	  <exclude body1="Rj5" body2="baseR"/>
+	  <exclude body1="Rj4" body2="Rj5"/>
+	  <exclude body1="Rj3" body2="Rj2"/>
+	  <exclude body1="Rj2" body2="Rab"/>
+	  <exclude body1="Rj1" body2="Rab"/>
+	  
+	  <!--ROV BODY-->
+	  
+	  <exclude body1="leftarm" body2="rightarm"/>
+	  
+	  <exclude body1="rov" body2="j4"/>
+	  <exclude body1="rov" body2="j5"/>
+	  <exclude body1="rov" body2="j3"/>
+	  <exclude body1="rov" body2="tube"/>
+	  <exclude body1="rov" body2="j2"/>
+	  <exclude body1="rov" body2="j1"/>
+	  <exclude body1="rov" body2="ab"/>
+	  
+	  <exclude body1="rov" body2="Rj4"/>
+	  <exclude body1="rov" body2="Rj5"/>
+	  <exclude body1="rov" body2="Rj3"/>
+	  <exclude body1="rov" body2="Rtube"/>
+	  <exclude body1="rov" body2="Rj2"/>
+	  <exclude body1="rov" body2="Rj1"/>
+	  <exclude body1="rov" body2="Rab"/>
+	  
+	  
+	</contact>
+	
+    <worldbody>
+		
+		<!--LEFT ARM-->
+		
+		<body name="leftarm" pos="-0.3 -0.63 0.7">
+		<body name="base" pos="0 0 0" euler="90 180 0">
+		  <geom name="base" type="mesh" mesh="base" mass="2"/>
+			
+		  
+		  <body name="j4" pos="0.86 0.715 -0.355" euler="0 0 180">
+            <geom name="joint4" rgba='0 1 0 1' type="mesh" mesh="joint42" mass="1"/>
+            <joint name="zjoint4" type="hinge" axis="0 0 1" pos="0 0 0" range="-120 90" ref="0" damping="20" />  
+		  
+			<body name="j5" pos="-0.26 0 0" euler="0 0 180"><!--204.08-->
+			  <geom type="mesh" mesh="joint52" rgba="1 0 0 1" /> <!--mass="0.4"-->
+              <joint name="joint5" type="hinge" pos="0 0 0" axis="1 0 0" range="-70 60" ref="0" damping="20" />
+			  
+			  <body name="tube" pos="0 0 -0.577" euler="90 0 0">
+				<geom type="mesh" mesh="longtube" />
+				
+				<body name="j3" pos="0 -0.47 0" euler="0 180 180">
+				  <geom type="mesh" mesh="joint3" rgba="1 0 1 1" />
+				  <joint name="joint3" type="hinge" pos="0 0 0" axis="0 1 0" ref="0" damping="20"/>
+				  
+				  
+				  <body name="j2" pos="0.27 0 0" euler="90 0 0">
+					<geom type="mesh" mesh="joint2" rgba="0 0 1 1" />
+					<joint name="joint2" pos="0 0 0" axis="1 0 0" range="-110 65" ref="0" damping="10" />
+					
+					<body name="ab" pos="0 0.15 0.045" euler="0 180 0">
+					  <geom type="mesh" mesh="ab" rgba="1 1 1 1"/>
+					  <joint name="joint1" pos="0 0 0.045" axis="0 1 0" range="-60 105" ref="0" damping="10" />
+					  
+					  <body name="j1" pos="0 0.176 0.0465" euler="0 180 0">
+					    <geom type="mesh" mesh="joint1" rgba="1 1 0 1" />
+						
+						<body name="claw" pos="0 0.135 0" euler="0 0 0">
+						  <geom type="mesh" mesh="rxclaw" rgba="0 1 1 1"/>
+						</body>
+					  </body>
+					</body>
+				  </body>
+				  
+				</body>
+				
+			  </body>
+			  
+		    </body>
+			
+          </body>
+		  
+
+		</body>
+		</body>
+		
+		<!--RIGHT ARM-->
+		
+		<body name="rightarm" pos="-2 0.3 0.7" euler="90 180 0">
+			<body name="baseR" pos="0 0 0" euler="0 180 0">
+			<geom name="Rbase" type="mesh" mesh="Rbase" mass="2"/>
+		  
+		  <body name="Rj4" pos="0.86 0.715 -0.355" euler="0 0 0">
+            <geom name="Rjoint4" rgba='0 1 0 1' type="mesh" mesh="Rjoint42" mass="1"/>
+            <joint name="Rzjoint4" type="hinge" axis="0 0 1" pos="0 0 0" range="-120 90" ref="0" damping="30" />  
+
+			<body name="Rj5" pos="-0.26 0 0" euler="0 0 180"><!--204.08-->
+			  <geom type="mesh" mesh="Rjoint52" rgba="1 0 0 1" /> <!--mass="0.4"-->
+              <joint name="Rjoint5" type="hinge" pos="0 0 0" axis="1 0 0" range="-70 60" ref="0" damping="30" />
+			  
+			  <body name="Rtube" pos="0 0 -0.577" euler="90 0 0">
+				<geom type="mesh" mesh="Rlongtube" />
+				
+				<body name="Rj3" pos="0 -0.47 0" euler="0 180 180">
+				  <geom type="mesh" mesh="Rjoint3" rgba="1 0 1 1" />
+				  <joint name="Rjoint3" type="hinge" pos="0 0 0" axis="0 1 0" ref="0" damping="20"/>
+				  
+				  <body name="Rj2" pos="0.27 0 0" euler="-90 0 0">
+					<geom type="mesh" mesh="Rjoint2" rgba="0 0 1 1" />
+					<joint name="Rjoint2" pos="0 0 0" axis="1 0 0" range="-110 65" ref="0" damping="10" />
+					
+					<body name="Rab" pos="0 0.15 0.045" euler="0 180 0">
+					  <geom type="mesh" mesh="Rab" rgba="1 1 1 1"/>
+					  <joint name="Rjoint1" pos="0 0 0.045" axis="0 1 0" range="-60 105" ref="0" damping="10" />
+					  
+					  <body name="Rj1" pos="0 0.176 0.0465" euler="0 180 0">
+					    <geom type="mesh" mesh="Rjoint1" rgba="1 1 0 1" />
+						
+						<body name="Rclaw" pos="0 0.135 0" euler="0 0 0">
+						  <geom type="mesh" mesh="Rrxclaw" rgba="0 1 1 1"/>
+						</body>
+					  </body>
+					</body>
+				  </body>
+				  
+				</body>
+				
+			  </body>
+			  
+		    </body>
+			
+          </body>
+		  
+
+		</body>
+		</body>
+		
+		<!--ROV FRAME-->
+		
+		<body name="rov" pos="0 0 0" euler="0 0 0">
+		  <geom type="mesh" mesh="rovframe" />
+		</body>
+		
+		
+        
+    </worldbody>
+	
+	<actuator>
+		
+		<!--LEFT ARM-->
+		
+		<position name="basejoint" joint="zjoint4" kp="1500" kv="500" ctrlrange="-2 1.57" />
+		<position name="shoulder" joint="joint5" kp="1700" kv="500" ctrlrange="-1 0.64" />
+		<position name="elbow1" joint="joint3" kp="1700" kv="250" ctrlrange="-3 3" />
+		<position name="elbow2" joint="joint2" kp="1000" kv="150" ctrlrange="-1.91 1" />
+		<position name="wrist" joint="joint1" kp="1000" kv="100" ctrlrange="-1 1.85" />
+		
+		<!--RIGHT ARM-->
+		
+		<position name="Rbasejoint" joint="Rzjoint4" kp="1500" kv="500" ctrlrange="-2 1.57" />
+		<position name="Rshoulder" joint="Rjoint5" kp="1700" kv="500" ctrlrange="-1 0.64" />
+		<position name="Relbow1" joint="Rjoint3" kp="1700" kv="250" ctrlrange="-3 3" />
+		<position name="Relbow2" joint="Rjoint2" kp="1000" kv="150" ctrlrange="-1.91 1" />
+		<position name="Rwrist" joint="Rjoint1" kp="1000" kv="100" ctrlrange="-1 1.85" />
+		
+	</actuator>
+	
+    
+</mujoco>
+

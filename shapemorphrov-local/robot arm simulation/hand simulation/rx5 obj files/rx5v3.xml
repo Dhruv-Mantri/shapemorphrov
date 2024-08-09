@@ -1,0 +1,122 @@
+<mujoco model="RX5">
+    <compiler angle="degree" />
+    <option timestep="0.001" />
+	<visual>
+		<headlight ambient="0.5 0.5 0.5"/>
+	</visual>
+    <asset>
+        <mesh name="base" file="Base Defeatured.STEP-1.obj" scale="0.005 0.005 0.005"/>  
+		<mesh name="joint42" file="joint4final.obj" scale="0.005 0.005 0.005" />
+        <mesh name="ab" file="ab2.obj" scale="0.005 0.005 0.005" />
+        <mesh name="rxclaw" file="claw.obj" scale="0.005 0.005 0.005" />
+        <mesh name="longtube" file="tubefinal.obj" scale="0.005 0.005 0.005" />
+        <mesh name="joint1" file="joint1.obj" scale="0.005 0.005 0.005" />
+        <mesh name="joint2" file="joint2final.obj" scale="0.005 0.005 0.005" />
+        <mesh name="joint3" file="joint3final2.obj" scale="0.005 0.005 0.005" />
+		<mesh name="joint52" file="joint5final.obj" scale="0.005 0.005 0.005" />
+    </asset>
+	
+	<!--<default>
+        <geom contype='1' conaffinity='1' condim='3' friction='.1 .1' solimp='.95 .98 .0005' solref='0.02 1.1' density='1'/>
+        <joint type='hinge' armature='0' damping='0'
+           solimpfriction='.95 .95 0' solreffriction='.02 1' solimplimit='0 .99 .01' solreflimit='.02 1'/>
+    </default>
+	
+	<!--<contact>
+		<pair geom1="base" geom2="joint4" gap="1"/>
+	</contact>
+	
+	<!--PATTEbRN
+		<body>
+		  <inertial>
+		  <joint>
+		  <geom>
+		    <body>
+	ITS TOO BIG
+	-->
+	
+	<contact>
+	  <exclude body1="j4" body2="base"/>
+	  <exclude body1="j5" body2="base"/>
+	  <exclude body1="j4" body2="j5"/>
+	  <exclude body1="j3" body2="j2"/>
+	  <exclude body1="j2" body2="ab"/>
+	  <exclude body1="j1" body2="ab"/>
+	</contact>
+	
+    <worldbody>
+		<!--geom name='ground' type='plane' pos='-1 0.5 0.06' size='1 1 1' rgba='0.78 0.93 0.92 1.0' margin='0.1' gap='0.1' /-->
+		
+		<body name="base" pos="0 0 0" euler="0 180 0">
+		  <geom name="base" type="mesh" mesh="base" mass="2"/>
+		  
+		  <body name="j4" pos="0.86 0.715 -0.355" euler="0 0 0">
+            <geom name="joint4" rgba='0 1 0 1' type="mesh" mesh="joint42" mass="1"/>
+            <joint name="zjoint4" type="hinge" axis="0 0 1" pos="0 0 0" range="-120 90" ref="0" damping="20" />  
+		  
+		  <!--body name="j4" pos="-0.218 0.419 0" euler="0 0 -24.08">
+            <geom name="joint4" rgba='0 1 0 1' type="mesh" mesh="joint4" />
+            <joint name="zjoint4" type="hinge" axis="0 0 1" pos="0.87 0.717 0" range="-120 90" />  
+			
+			<!--body name="j5" pos="0 0 0">
+			  <geom type="mesh" mesh="joint5" />
+              <joint name="joint5" type="hinge" pos="0 0.6 -0.35" axis="1 0 0" />
+			</body-->
+			<body name="j5" pos="-0.26 0 0" euler="0 0 180"><!--204.08-->
+			  <geom type="mesh" mesh="joint52" rgba="1 0 0 1" /> <!--mass="0.4"-->
+              <joint name="joint5" type="hinge" pos="0 0 0" axis="1 0 0" range="-70 60" ref="0" damping="20" />
+			  
+			  <body name="tube" pos="0 0 -0.577" euler="90 0 0">
+				<geom type="mesh" mesh="longtube" />
+				
+				<body name="j3" pos="0 -0.47 0" euler="0 0 180">
+				  <geom type="mesh" mesh="joint3" rgba="1 0 1 1" />
+				  <!--joint name="joint3" type="hinge" pos="0 0 0" axis="1 0 0" /-->
+				  
+				  <body name="j2" pos="0.27 0 0" euler="90 0 0">
+					<geom type="mesh" mesh="joint2" rgba="0 0 1 1" />
+					<joint name="joint2" pos="0 0 0" axis="1 0 0" range="-110 65" ref="0" damping="10" />
+					
+					<body name="ab" pos="0 0.15 0.045" euler="0 180 0">
+					  <geom type="mesh" mesh="ab" rgba="1 1 1 1"/>
+					  <joint name="joint1" pos="0 0 0.045" axis="0 1 0" range="-60 105" ref="0" damping="10" />
+					  
+					  <body name="j1" pos="0 0.176 0.0465" euler="0 180 0">
+					    <geom type="mesh" mesh="joint1" rgba="1 1 0 1" />
+						
+						<body name="claw" pos="0 0.135 0" euler="0 0 0">
+						  <geom type="mesh" mesh="rxclaw" rgba="0 1 1 1"/>
+						</body>
+					  </body>
+					</body>
+				  </body>
+				  
+				</body>
+				
+			  </body>
+			  
+		    </body>
+			
+          </body>
+		  
+
+		</body>
+		
+		
+        
+    </worldbody>
+	
+	<actuator>
+		<!--motor joint="joint5" name="joint5" gear="1" ctrlrange="-180 180" ctrllimited="true" /-->
+		<!--position name="position_servo" joint="joint5" kp="1000" ctrlrange="0 0" /-->
+		
+		<position name="basejoint" joint="zjoint4" kp="1500" kv="200" ctrlrange="-2 1.57" />
+		<position name="shoulder" joint="joint5" kp="1700" kv="250" ctrlrange="-1 0.64" />
+		<position name="elbow" joint="joint2" kp="1000" kv="150" ctrlrange="-1.91 1" />
+		<position name="wrist" joint="joint1" kp="1000" kv="100" ctrlrange="-1 1.85" />
+		
+	</actuator>
+	
+    
+</mujoco>
+
